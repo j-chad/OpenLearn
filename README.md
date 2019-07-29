@@ -1,4 +1,4 @@
-<h3 align="center">Open Learn</h3>
+<h2 align="center">Open Learn</h2>
 
 ---
 
