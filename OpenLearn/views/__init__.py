@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-
 """Views package, contains blueprints"""
 
-__all__ = ["public", "student", "teacher"]
+from . import public, teacher, student

@@ -10,4 +10,4 @@ from flask import (
     url_for,
 )
 
-blueprint = Blueprint("teacher", __name__, static_folder="../static")
+blueprint = Blueprint("teacher", __name__, static_folder="../static", template_folder="../templates/teacher")

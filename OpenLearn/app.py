@@ -7,15 +7,17 @@ import sys
 from flask import Flask, render_template
 
 from . import views
+from . import settings
 
 
-def create_app(config_object="openlearn.settings"):
+def create_app():
     """Create application factory, as explained here: http://flask.pocoo.org/docs/patterns/appfactories/.
 
     :param config_object: The configuration object to use.
     """
     app = Flask(__name__.split(".")[0])
-    app.config.from_object(config_object)
+
+    settings.configure_app(app)
 
     register_extensions(app)
     register_blueprints(app)
@@ -34,9 +36,9 @@ def register_extensions(app):
 
 def register_blueprints(app):
     """Register Flask blueprints."""
-    app.register_blueprint(views.public.controller.blueprint)
-    app.register_blueprint(views.student.controller.blueprint)
-    app.register_blueprint(views.teacher.controller.blueprint)
+    app.register_blueprint(views.public.blueprint)
+    app.register_blueprint(views.student.blueprint)
+    app.register_blueprint(views.teacher.blueprint)
 
 
 def register_errorhandlers(app):
