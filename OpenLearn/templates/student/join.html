@@ -139,6 +139,7 @@
                     }
                 };
                 xhttp.open("POST", "{{url_for("student.join_room")}}", true);
+                xhttp.setRequestHeader("X-CSRFToken", "{{ form.csrf_token.current_token }}");
                 xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
                 xhttp.send(requestBody);
             });

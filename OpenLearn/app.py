@@ -11,12 +11,12 @@ from . import views
 from . import settings
 
 
-def create_app():
+def create_app(config=settings.ConfigType.Auto):
     """Create application factory, as explained here: http://flask.pocoo.org/docs/patterns/appfactories/.
     """
     app = Flask(__name__.split(".")[0], instance_relative_config=True)
 
-    settings.configure_app(app)
+    settings.configure_app(app, config)
 
     register_extensions(app)
     register_blueprints(app)
@@ -38,6 +38,8 @@ def register_extensions(app):
     @extensions.login_manager.user_loader
     def load_user(user_id):
         return database.User.query.get(int(user_id))
+
+    extensions.login_manager.login_view = "public.login"
 
 
 def register_blueprints(app):

@@ -17,4 +17,4 @@ def dashboard():
 @blueprint.route("/logout")
 def logout():
     logout_user()
-    return redirect(url_for("public.sign_in"))
+    return redirect(url_for("public.login"))

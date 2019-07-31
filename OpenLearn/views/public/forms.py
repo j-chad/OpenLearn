@@ -35,7 +35,6 @@ class LoginForm(FlaskForm):
         return True
 
 
-
 class RegisterForm(FlaskForm):
     username = StringField("Username", validators=[
         InputRequired(),

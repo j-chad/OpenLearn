@@ -28,12 +28,12 @@ def index():
 
 
 @blueprint.route("/login")
-def sign_in():
+def login():
     form = LoginForm()
     if form.validate_on_submit():
         login_user(form.user)
         return redirect(url_for("teacher.dashboard"))
-    return render_template("sign-in.html", form=form)
+    return render_template("login.html", form=form)
 
 
 @blueprint.route("/register", methods=["GET", "POST"])
