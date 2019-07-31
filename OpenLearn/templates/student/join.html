@@ -156,10 +156,9 @@
         <div id="form-container">
             <div class="siimple-form" id="room-code-form">
                 <div class="siimple-form-field">
-                    <div class="siimple-form-field-label siimple--color-light">Room Code</div>
-                    <input type="text" id="room-code-input" name="room-code" class="siimple-input"
-                           placeholder="0000-0000" minlength="9"
-                           maxlength="9" required pattern="([A-Z0-9]){4}-([A-Z0-9]){4}">
+                    {{ form.room_code.label(class_="siimple-form-field-label siimple--color-light") }}
+                    {{ form.room_code(id="room-code-input", class_="siimple-input", placeholder="0000-0000", minlength="9",
+                            maxlength="9", pattern="([A-Z0-9]){4}-([A-Z0-9]){4}", autocomplete="off") }}
                 </div>
                 <div class="siimple-form-field">
                     <button id="submit-btn"
@@ -167,9 +166,11 @@
                             disabled>Join
                     </button>
                 </div>
-                <div id="room-code-status" class="siimple-alert siimple-alert--error siimple--display-none"></div>
+                <div id="room-code-status"
+                     class="siimple-alert siimple-alert--error{% if form.errors|length == 0 %} siimple--display-none{% endif %}">
+                    {{ form.errors.values()|first|first }}
+                </div>
             </div>
         </div>
     </div>
-
 {% endblock %}

@@ -2,25 +2,30 @@
 """The controller for all views related to students"""
 from flask import (
     Blueprint,
-    current_app,
-    flash,
-    redirect,
     render_template,
     request,
-    url_for,
     jsonify)
+
+from .forms import JoinRoomForm
 
 blueprint = Blueprint("student", __name__, static_folder="../../static", template_folder="../../templates/student")
 
 
 @blueprint.route("/join", methods=["GET", "POST"])
 def join_room():
+    form = JoinRoomForm()
     if request.method == "GET":
-        return render_template("join.html")
+        return render_template("join.html", form=form)
     else:
-        code = request.form["room-code"]
+        exists = False
+        message = ""
+        if form.validate():
+            exists = True
+        else:
+            message = list(form.errors)[0][0]
 
         return jsonify({
-            "roomCode": code,
-            "exists": False
+            "roomCode": form.room_code.data,
+            "exists": exists,
+            "message": message
         }), 200

@@ -3,12 +3,10 @@
 from flask import (
     Blueprint,
     current_app,
-    flash,
-    redirect,
     render_template,
-    request,
-    url_for,
-    abort)
+    abort, redirect)
+
+from .forms import RegisterForm, LoginForm
 
 blueprint = Blueprint("public", __name__, static_folder="../../static", template_folder="../../templates/public")
 
@@ -28,4 +26,15 @@ def index():
 
 @blueprint.route("/sign-in")
 def sign_in():
-    return render_template("sign-in.html")
+    form = LoginForm()
+    if form.validate_on_submit():
+        return redirect("/success")
+    return render_template("sign-in.html", form=form)
+
+
+@blueprint.route("/register", methods=["GET", "POST"])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        return redirect("/success")
+    return render_template("register.html", form=form)
