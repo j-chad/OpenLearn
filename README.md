@@ -3,7 +3,7 @@
 ---
 
 <p align="center">
-    A open source web application which will enable cooperative learning with students.
+    An open source platform for collaborative learning.
 </p>
 
 ## Built Using <a name="built_using"></a>

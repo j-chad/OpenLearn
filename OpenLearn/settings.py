@@ -15,10 +15,12 @@ class BaseConfig(object):
     TESTING = False
     VERSION = OpenLearn.__version__
 
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
-    TESTING = True
+    TESTING = False
     VERSION = f"{OpenLearn.__version__} dev"
 
 
@@ -34,4 +36,4 @@ class ProductionConfig(BaseConfig):
 def configure_app(app):
     config_name = os.getenv("FLASK_ENV", "default")
     app.config.from_object(config[config_name])
-    app.config.from_pyfile('config.cfg', silent=True)
+    app.config.from_pyfile('config.cfg', silent=False)

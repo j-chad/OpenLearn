@@ -6,6 +6,7 @@ import sys
 
 from flask import Flask, render_template
 
+from OpenLearn import extensions, database
 from . import views
 from . import settings
 
@@ -13,7 +14,7 @@ from . import settings
 def create_app():
     """Create application factory, as explained here: http://flask.pocoo.org/docs/patterns/appfactories/.
     """
-    app = Flask(__name__.split(".")[0])
+    app = Flask(__name__.split(".")[0], instance_relative_config=True)
 
     settings.configure_app(app)
 
@@ -29,7 +30,7 @@ def create_app():
 
 def register_extensions(app):
     """Register Flask extensions."""
-    pass
+    extensions.db.init_app(app)
 
 
 def register_blueprints(app):
@@ -58,7 +59,16 @@ def register_shellcontext(app):
 
     def shell_context():
         """Shell context objects."""
-        return {}
+        return {
+            "db": extensions.db,
+            "User": database.User,
+            "Quiz": database.Quiz,
+            "Question": database.Question,
+            "NumericQuestion": database.NumericQuestion,
+            "TextQuestion": database.TextQuestion,
+            "QuestionType": database.QuestionType,
+            "Room": database.Room
+        }
 
     app.shell_context_processor(shell_context)
 
