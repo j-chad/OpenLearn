@@ -1,0 +1,74 @@
+{% extends "./layout.html" %}
+
+{% set footer_color = "blue" %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+        {# I know. *sigh* #} /**/
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex-grow: 2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #form-section {
+            flex-grow: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #room-code-input, #form-container {
+            max-width: 450px;
+            width: 100%;
+            margin: 0;
+        }
+
+        .siimple-footer-link {
+            color: white;
+        }
+
+        .siimple-footer-link:hover {
+            color: rgba(255, 255, 255, 0.4) !important;
+        }
+    </style>
+{% endblock %}
+
+{% block main %}
+    <div class="siimple-content--fluid siimple--bg-primary siimple--py-5" id="form-section">
+        <div id="form-container" class="siimple--display-inline-flex">
+            <div class="siimple-form siimple--bg-light siimple--py-5 siimple--px-5 siimple--rounded" id="room-code-form">
+                <div class="siimple-form-title">Sign In</div>
+                <div class="siimple-form-detail">Don't have an account? <a href="" class="siimple-link">Register Here</a></div>
+                <div class="siimple-form-field">
+                    <label for="username" class="siimple-form-field-label">Username</label>
+                    <input type="text" id="username" name="username" class="siimple-input siimple-input--fluid siimple--bg-primary siimple--color-white">
+                </div>
+                <div class="siimple-form-field">
+                    <label for="password" class="siimple-form-field-label">Password</label>
+                    <input type="password" id="password" name="password" class="siimple-input siimple-input--fluid siimple--bg-primary siimple--color-white">
+                </div>
+                <div class="siimple-form-field">
+                    <button id="submit-btn"
+                            class="siimple-btn siimple-btn--success siimple-btn--big siimple-btn--disabled siimple-btn--fluid"
+                            disabled>Sign In
+                    </button>
+                </div>
+                <div id="room-code-status" class="siimple-alert siimple-alert--error siimple--display-none"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

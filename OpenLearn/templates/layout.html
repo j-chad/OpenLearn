@@ -3,6 +3,7 @@
 navbar_color - sets the colour of the navbar
 footer_color - sets the colour of the footer
 navbar_brand_hides - sets whether the brand in the navbar will hide on small screens
+noscript_can_close - default false - whether the user can close the noscript modal
 #}
 
 <!doctype html>
@@ -22,8 +23,31 @@ navbar_brand_hides - sets whether the brand in the navbar will hide on small scr
 </head>
 <body>
 {% block body %}
+    <noscript>
+        <link rel="stylesheet" href="{{ url_for("static", filename="css/noscript.css") }}">
+        <input type="checkbox" id="noscript-close" name="noscript-modal" checked autocomplete="off" hidden>
+        <div class="noscript-modal">
+            <div class="siimple-content--small modal-content">
+                <div class="siimple-box siimple-box--primary">
+                    {% if noscript_can_close|default(false) %}
+                        <label for="noscript-close"><i class="far fa-times-circle close"></i></label>
+                    {% endif %}
+                    <div class="siimple-box-title">Your Javascript is disabled</div>
+                    <div class="siimple-box-detail">
+                        <p class="siimple-paragraph">Unfortunately this application requires javascript for much of its
+                            functionality.</p>
+                        <p class="siimple-paragraph">If your javascript is unintentionally disabled, you can <a
+                                href="https://www.enable-javascript.com/" class="siimple-link">find instructions here</a>.</p>
+
+                        <p class="siimple-paragraph">If your javascript is disabled due to privacy purposes, you can find the full source code of this website
+                            <a href="https://github.com/j-chad/OpenLearn" class="siimple-link">on GitHub</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </noscript>
     {% block nav %}
-        <nav class="siimple-navbar siimple-navbar--{{navbar_color|default("primary")}} siimple-navbar--extra-large">
+        <nav class="siimple-navbar siimple-navbar--{{ navbar_color|default("primary") }} siimple-navbar--extra-large">
             <div class="{% if navbar_brand_hides %}siimple--display-xs-none {% endif %}siimple--display-inline-block">
                 <a class="siimple-navbar-title" href="{{ url_for("public.index") }}"><span class="siimple-brand">OpenLearn</span></a>
                 <div class="siimple-navbar-subtitle">v{{ config["VERSION"] }}</div>
@@ -39,14 +63,15 @@ navbar_brand_hides - sets whether the brand in the navbar will hide on small scr
         {% endblock %}
     </main>
     {% block footer %}
-        <footer class="siimple-footer siimple-footer--{{footer_color|default("light")}} siimple--text-center">
+        <footer class="siimple-footer siimple-footer--{{ footer_color|default("light") }} siimple--text-center">
             Designed & Built by <strong><a class="siimple-footer-link siimple-footer-link--inline"
                                            href="https://github.com/j-chad">Jackson Chadfield</a></strong>
         </footer>
     {% endblock %}
 {% endblock %}
 {% block scripts %}
-    <script src="https://instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+    <script src="https://instant.page/1.2.2" type="module"
+            integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
 {% endblock %}
 </body>
 </html>
