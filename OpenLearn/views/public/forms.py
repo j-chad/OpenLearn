@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
+from typing import Optional
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
 from wtforms.validators import Length, EqualTo, InputRequired
+
+from OpenLearn.database import User
 
 
 class LoginForm(FlaskForm):
@@ -12,6 +16,24 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password", validators=[
         InputRequired(message="You must enter your username")
     ])
+
+    def __init__(self, *args, **kwargs):
+        """Create instance."""
+        super().__init__(*args, **kwargs)
+        self.user: Optional[User] = None
+
+    def validate(self):
+        self.user = User.query.filter_by(username=self.username.data).first()
+        if not self.user:
+            self.username.errors.append("Unknown username")
+            return False
+
+        if not self.user.check_password(self.password.data):
+            self.password.errors.append("Invalid password")
+            return False
+
+        return True
+
 
 
 class RegisterForm(FlaskForm):

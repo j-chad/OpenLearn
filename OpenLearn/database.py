@@ -6,9 +6,10 @@ import string
 from decimal import Decimal
 from typing import Union, List
 
+from flask_login import UserMixin
 from sqlalchemy import func
 
-from .extensions import db
+from .extensions import db, bcrypt
 
 # Alias common SQLAlchemy names
 Column = db.Column
@@ -35,14 +36,29 @@ class QuestionType(enum.Enum):
         }[self]
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     id: MInteger = db.Column(db.Integer, primary_key=True)
     username: MString = db.Column(db.String(25), unique=True, nullable=False)
-    password = db.Column(db.Binary(60), nullable=False)
+    __password = db.Column("password", db.Binary(60), nullable=False)
 
     quizzes: List["Quiz"] = relationship("Quiz", back_populates="owner")
 
     created_on: MDateTime = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now())
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    @property
+    def password(self):
+        return self.__password
+
+    @password.setter
+    def password(self, value):
+        pw_hash = bcrypt.generate_password_hash(value)
+        self.__password = pw_hash
+
+    def check_password(self, candidate) -> bool:
+        return bcrypt.check_password_hash(self.__password, candidate)
 
 
 class Quiz(db.Model):

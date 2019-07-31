@@ -6,7 +6,7 @@ import sys
 
 from flask import Flask, render_template
 
-from OpenLearn import extensions, database
+from OpenLearn import extensions, database, commands
 from . import views
 from . import settings
 
@@ -31,6 +31,13 @@ def create_app():
 def register_extensions(app):
     """Register Flask extensions."""
     extensions.db.init_app(app)
+    extensions.bcrypt.init_app(app)
+    extensions.login_manager.init_app(app)
+
+    # Flask Login
+    @extensions.login_manager.user_loader
+    def load_user(user_id):
+        return database.User.query.get(int(user_id))
 
 
 def register_blueprints(app):
@@ -75,7 +82,7 @@ def register_shellcontext(app):
 
 def register_commands(app):
     """Register Click commands."""
-    pass
+    app.cli.add_command(commands.rebuild_database)
 
 
 def configure_logger(app):

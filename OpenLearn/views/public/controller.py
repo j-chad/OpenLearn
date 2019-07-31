@@ -4,8 +4,11 @@ from flask import (
     Blueprint,
     current_app,
     render_template,
-    abort, redirect)
+    abort, redirect, url_for)
+from flask_login import login_user
 
+from OpenLearn.database import User
+from OpenLearn.extensions import db
 from .forms import RegisterForm, LoginForm
 
 blueprint = Blueprint("public", __name__, static_folder="../../static", template_folder="../../templates/public")
@@ -24,11 +27,12 @@ def index():
     return render_template("index.html")
 
 
-@blueprint.route("/sign-in")
+@blueprint.route("/login")
 def sign_in():
     form = LoginForm()
     if form.validate_on_submit():
-        return redirect("/success")
+        login_user(form.user)
+        return redirect(url_for("teacher.dashboard"))
     return render_template("sign-in.html", form=form)
 
 
@@ -36,5 +40,9 @@ def sign_in():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
-        return redirect("/success")
+        user = User(username=form.username.data, password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        login_user(user)
+        return redirect(url_for("teacher.dashboard"))
     return render_template("register.html", form=form)
