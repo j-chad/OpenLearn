@@ -1,0 +1,52 @@
+{#
+## Variables Available
+navbar_color - sets the colour of the navbar
+footer_color - sets the colour of the footer
+navbar_brand_hides - sets whether the brand in the navbar will hide on small screens
+#}
+
+<!doctype html>
+<html lang="en">
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{% block title %}OpenLearn{% endblock %}</title>
+        {% block styles %}
+            <link rel="stylesheet" href="{{ url_for("static", filename="css/fa-all.min.css") }}">
+            <link rel="stylesheet" href="{{ url_for("static", filename="css/siimple.min.css") }}">
+        {% endblock %}
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    {% block nav %}
+        <nav class="siimple-navbar siimple-navbar--{{navbar_color|default("primary")}} siimple-navbar--extra-large">
+            <div class="{% if navbar_brand_hides %}siimple--display-xs-none {% endif %}siimple--display-inline-block">
+                <a class="siimple-navbar-title" href="{{ url_for("public.index") }}"><span class="siimple-brand">OpenLearn</span></a>
+                <div class="siimple-navbar-subtitle">v{{ config["VERSION"] }}</div>
+            </div>
+            <div class="siimple--float-right siimple--float-xs-none siimple--text-center">
+                {% block nav_items %}
+                {% endblock %}
+            </div>
+        </nav>
+    {% endblock %}
+    <main>
+        {% block main %}
+        {% endblock %}
+    </main>
+    {% block footer %}
+        <footer class="siimple-footer siimple-footer--{{footer_color|default("light")}} siimple--text-center">
+            Designed & Built by <strong><a class="siimple-footer-link siimple-footer-link--inline siimple--color-white"
+                                           href="https://github.com/j-chad">Jackson Chadfield</a></strong>
+        </footer>
+    {% endblock %}
+{% endblock %}
+{% block scripts %}
+    <script src="https://instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+{% endblock %}
+</body>
+</html>

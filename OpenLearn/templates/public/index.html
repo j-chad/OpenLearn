@@ -1,0 +1,46 @@
+{% extends "./layout.html" %}
+
+{% set navbar_color = "light" %}
+{% set navbar_brand_hides = true %}
+
+{% block nav_items %}
+    <a class="siimple-navbar-item" href="{{ url_for("public.sign_in") }}"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+    <a class="siimple-navbar-item" href="{{ url_for("student.join_room") }}"><i class="fas fa-users"></i> Join a Room</a>
+{% endblock %}
+
+{% block main %}
+    <main>
+        <div class="siimple-jumbotron siimple-jumbotron--primary siimple-jumbotron--extra-large siimple--text-center">
+            <div class="siimple-jumbotron-title"><span class="siimple-brand">OpenLearn</span></div>
+            <div class="siimple-jumbotron-subtitle">A free platform for collaborative learning</div>
+        </div>
+        <div class="siimple-content--small siimple--py-5 siimple--bg-light">
+            <h3 class="siimple-h3 siimple--text-center">About</h3>
+            <p class="siimple-p">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium doloribus eveniet illo illum
+                non nostrum officia placeat veritatis voluptatum. Alias aliquid animi, in natus officia ratione
+                voluptas? Dolor, ipsam! Accusantium, alias aperiam architecto aut culpa eaque enim iusto libero maxime
+                modi nemo neque numquam placeat praesentium ratione rem sapiente sed sit soluta sunt suscipit velit
+                voluptate? Aspernatur, ex sequi?
+            </p>
+        </div>
+        <div class="siimple-content--small siimple--py-5 siimple--bg-light">
+            <h3 class="siimple-h3 siimple--text-center">Features</h3>
+            <p class="siimple-p">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium doloribus eveniet illo illum
+                non nostrum officia placeat veritatis voluptatum. Alias aliquid animi, in natus officia ratione
+                voluptas? Dolor, ipsam! Accusantium, alias aperiam architecto aut culpa eaque enim iusto libero maxime
+                modi nemo neque numquam placeat praesentium ratione rem sapiente sed sit soluta sunt suscipit velit
+                voluptate? Aspernatur, ex sequi?
+            </p>
+
+            <p class="siimple-p">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium doloribus eveniet illo illum
+                non nostrum officia placeat veritatis voluptatum. Alias aliquid animi, in natus officia ratione
+                voluptas? Dolor, ipsam! Accusantium, alias aperiam architecto aut culpa eaque enim iusto libero maxime
+                modi nemo neque numquam placeat praesentium ratione rem sapiente sed sit soluta sunt suscipit velit
+                voluptate?
+            </p>
+        </div>
+    </main>
+{% endblock %}

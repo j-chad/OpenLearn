@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import OpenLearn
 
 config = {
     "development": "OpenLearn.settings.DevelopmentConfig",
@@ -12,11 +13,13 @@ config = {
 class BaseConfig(object):
     DEBUG = False
     TESTING = False
+    VERSION = OpenLearn.__version__
 
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
     TESTING = True
+    VERSION = f"{OpenLearn.__version__} dev"
 
 
 class TestingConfig(BaseConfig):

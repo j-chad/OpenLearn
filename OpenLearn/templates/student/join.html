@@ -1,0 +1,167 @@
+{% extends "./layout.html" %}
+
+{% set footer_color = "blue" %}
+
+{% block title %}OpenLearn | Join{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+        {# I know. *sigh* #} /**/
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex-grow: 2;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #form-section {
+            flex-grow: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #room-code-input, #form-container {
+            max-width: 300px;
+            max-height: 120px;
+            width: 100%;
+            height: 100%;
+        }
+
+        form#room-code-form {
+            margin: 0 auto auto;
+        }
+
+        #room-code-input {
+            text-transform: uppercase;
+        }
+    </style>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script>
+        function formatCode(rawCode) {
+            var normalised = rawCode
+                .toUpperCase()
+                .replace(/[^0-9a-z]/gi, '');
+            if (normalised.length < 4) {
+                return rawCode;
+            }
+            var left = normalised.substring(0, 4);
+            var right = normalised.substring(4, 8);
+            return left + "-" + right;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var roomInput = document.getElementById("room-code-input");
+            var submitButton = document.getElementById("submit-btn");
+            var roomCodeStatus = document.getElementById("room-code-status");
+
+            roomInput.addEventListener("keyup", function (ev) {
+
+                // When user selected text in the document, abort.
+                var selection = window.getSelection().toString();
+                if (selection !== '') {
+                    return;
+                }
+
+                // When the arrow keys are pressed, abort.
+                if ([38, 40, 37, 39].indexOf(ev.keyCode) !== -1) {
+                    return;
+                }
+
+                if (ev.keyCode === 8 && this.value.length === 4) {
+                    return;
+                }
+
+                var value = this.value.replace("-", "");
+                this.value = formatCode(value);
+
+                if (this.validity.valid) {
+                    submitButton.disabled = false;
+                    submitButton.classList.remove("siimple-btn--disabled");
+                    roomCodeStatus.classList.add("siimple--display-none");
+                } else {
+                    submitButton.disabled = true;
+                    submitButton.classList.add("siimple-btn--disabled");
+                }
+            });
+
+            submitButton.addEventListener("click", function (ev) {
+                ev.preventDefault();
+                this.disabled = true;
+                roomInput.disabled = true;
+                submitButton.classList.add("siimple-btn--disabled");
+                roomInput.classList.add("siimple-btn--disabled");
+
+                var requestBody = roomInput.name + "=" + roomInput.value;
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState === 4) {
+                        if (this.status === 200) {
+                            var data = JSON.parse(this.responseText);
+                            if (data.exists) {
+                                // Todo: Implement logic for when rooms exist
+                            } else {
+                                roomCodeStatus.innerText = "Invalid Code";
+                                roomCodeStatus.classList.remove("siimple--display-none");
+                                roomInput.value = "";
+                            }
+                        } else {
+                            roomCodeStatus.innerText = "Something went wrong. Try again later.";
+                            roomCodeStatus.classList.remove("siimple--display-none");
+                            roomInput.value = "";
+                        }
+                        roomInput.disabled = false;
+                        roomInput.classList.remove("siimple-btn--disabled");
+                    }
+                };
+                xhttp.open("POST", "{{url_for("student.join_room")}}", true);
+                xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                xhttp.send(requestBody);
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div class="siimple-content--extra-large siimple--text-center siimple--bg-light siimple--py-5">
+        <div class="siimple-box-title">Join a Room</div>
+        <div class="siimple-box-subtitle">Enter your Room Code</div>
+    </div>
+
+    <div class="siimple-content--fluid siimple--bg-primary siimple--py-5" id="form-section">
+        <div id="form-container">
+            <div class="siimple-form" id="room-code-form">
+                <div class="siimple-form-field">
+                    <div class="siimple-form-field-label siimple--color-light">Room Code</div>
+                    <input type="text" id="room-code-input" name="room-code" class="siimple-input"
+                           placeholder="0000-0000" minlength="9"
+                           maxlength="9" required pattern="([A-Z0-9]){4}-([A-Z0-9]){4}">
+                </div>
+                <div class="siimple-form-field">
+                    <button id="submit-btn"
+                            class="siimple-btn siimple-btn--success siimple-btn--big siimple-btn--disabled siimple-btn--fluid"
+                            disabled>Join
+                    </button>
+                </div>
+                <div id="room-code-status" class="siimple-alert siimple-alert--error siimple--display-none"></div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
