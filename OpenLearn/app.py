@@ -33,6 +33,7 @@ def register_extensions(app):
     extensions.db.init_app(app)
     extensions.bcrypt.init_app(app)
     extensions.login_manager.init_app(app)
+    extensions.csrf.init_app(app)
 
     # Flask Login
     @extensions.login_manager.user_loader
@@ -85,6 +86,7 @@ def register_shellcontext(app):
 def register_commands(app):
     """Register Click commands."""
     app.cli.add_command(commands.rebuild_database)
+    app.cli.add_command(commands.current_config)
 
 
 def configure_logger(app):

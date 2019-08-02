@@ -40,7 +40,7 @@
             height: 100%;
         }
 
-        form#room-code-form {
+        form#create-quiz-form {
             margin: 0 auto auto;
         }
 
@@ -122,10 +122,10 @@
                     if (this.readyState === 4) {
                         if (this.status === 200) {
                             var data = JSON.parse(this.responseText);
-                            if (data.exists) {
+                            if (data["exists"]) {
                                 // Todo: Implement logic for when rooms exist
                             } else {
-                                roomCodeStatus.innerText = "Invalid Code";
+                                roomCodeStatus.innerText = data["message"];
                                 roomCodeStatus.classList.remove("siimple--display-none");
                                 roomInput.value = "";
                             }

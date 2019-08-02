@@ -23,6 +23,10 @@ class LoginForm(FlaskForm):
         self.user: Optional[User] = None
 
     def validate(self):
+        initial_validation = super().validate()
+        if not initial_validation:
+            return False
+
         self.user = User.query.filter_by(username=self.username.data).first()
         if not self.user:
             self.username.errors.append("Unknown username")

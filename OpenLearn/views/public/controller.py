@@ -5,7 +5,7 @@ from flask import (
     current_app,
     render_template,
     abort, redirect, url_for)
-from flask_login import login_user
+from flask_login import login_user, logout_user, current_user
 
 from OpenLearn.database import User
 from OpenLearn.extensions import db
@@ -27,8 +27,17 @@ def index():
     return render_template("index.html")
 
 
-@blueprint.route("/login")
+@blueprint.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("public.login"))
+
+
+@blueprint.route("/login", methods=["GET", "POST"])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for("teacher.dashboard"))
+
     form = LoginForm()
     if form.validate_on_submit():
         login_user(form.user)
@@ -38,6 +47,9 @@ def login():
 
 @blueprint.route("/register", methods=["GET", "POST"])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for("teacher.dashboard"))
+
     form = RegisterForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, password=form.password.data)

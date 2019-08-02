@@ -63,12 +63,13 @@ class User(db.Model, UserMixin):
 
 class Quiz(db.Model):
     id: MInteger = db.Column(db.Integer, primary_key=True)
-    name: MString = db.Column(db.String(30), unique=True, nullable=False)
+    title: MString = db.Column(db.String(30), unique=True, nullable=False)
+    description: MString = db.Column(db.Text, unique=False, nullable=True)
 
     questions: List[Union["Question", "QuestionABC"]] = db.relationship('Question', back_populates="quiz",
                                                                         order_by="Question.sort_index")
 
-    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     owner = db.relationship("User", back_populates="quizzes")
 
     created_on: MDateTime = db.Column(db.DateTime(timezone=True), nullable=False, server_default=func.now())

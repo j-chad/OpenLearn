@@ -6,6 +6,7 @@ import flask
 from flask.cli import with_appcontext
 
 from OpenLearn.extensions import db
+from OpenLearn.settings import ConfigType
 
 
 @click.command()
@@ -26,3 +27,9 @@ def rebuild_database() -> None:
     click.secho("Dropped All Tables", fg="red", bold=True)
     db.create_all()
     click.secho("Created All Tables", fg="green", bold=True)
+
+
+@click.command()
+@with_appcontext
+def current_config() -> None:
+    click.echo(repr(ConfigType.Auto.config))

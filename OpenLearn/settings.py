@@ -5,13 +5,6 @@ from typing import Optional
 
 import OpenLearn
 
-config = {
-    "development": "OpenLearn.settings.DevelopmentConfig",
-    "testing": "OpenLearn.settings.TestingConfig",
-    "production": "OpenLearn.settings.ProductionConfig",
-    "default": "OpenLearn.settings.DevelopmentConfig"
-}
-
 
 class ConfigType(enum.Enum):
     Auto = 0
@@ -22,9 +15,9 @@ class ConfigType(enum.Enum):
     @property
     def config(self):
         return {
-            ConfigType.Development: lambda: DevelopmentConfig,
-            ConfigType.Testing: lambda: TestingConfig,
-            ConfigType.Production: lambda: ProductionConfig,
+            ConfigType.Development: lambda: "OpenLearn.settings.DevelopmentConfig",
+            ConfigType.Testing: lambda: "OpenLearn.settings.TestingConfig",
+            ConfigType.Production: lambda: "OpenLearn.settings.ProductionConfig",
             ConfigType.Auto: lambda: ConfigType(os.getenv("FLASK_ENV", "development")).config
         }[self]()
 
@@ -40,15 +33,15 @@ class BaseConfig(object):
 
 
 class DevelopmentConfig(BaseConfig):
+    ENV = "development"
     DEBUG = True
-    TESTING = False
     VERSION = f"{OpenLearn.__version__} dev"
 
 
 class TestingConfig(BaseConfig):
     CONFIG_FILE = "testing.cfg"
 
-    DEBUG = False
+    ENV = "testing"
     TESTING = True
 
     SQLALCHEMY_DATABASE_URI = "sqlite://"

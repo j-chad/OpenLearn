@@ -22,8 +22,9 @@ def join_room():
         if form.validate():
             exists = True
         else:
-            message = list(form.errors)[0][0]
-
+            message = list(form.errors.values())[0]
+            if not isinstance(message, str):
+                message = message[0]
         return jsonify({
             "roomCode": form.room_code.data,
             "exists": exists,

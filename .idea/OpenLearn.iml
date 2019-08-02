@@ -17,6 +17,7 @@
         <option value="$MODULE_DIR$/OpenLearn/templates/public" />
         <option value="$MODULE_DIR$/OpenLearn/templates/student" />
         <option value="$MODULE_DIR$/OpenLearn/templates" />
+        <option value="$MODULE_DIR$/OpenLearn/templates/teacher" />
       </list>
     </option>
   </component>
