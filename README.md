@@ -19,13 +19,8 @@
 ## Table of Contents
 - [About](#about)
 - [Getting Started](#getting_started)
-- [Deployment](#deployment)
-- [Usage](#usage)
 - [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
-- [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
+- [Screenshots](#screenshots)
 
 ## About <a name = "about"></a>
 The idea for this project came from the realisation that there is no decent
@@ -33,7 +28,7 @@ learning platforms that respect the users privacy. This is an attempt to
 provide an alternative service which can be used at no cost.
 
 Currently, this project is in the concept stage. Some work has been started but I do not
-expect that I will be able to start full development on this project in the near future.
+expect that I will be able to put much time towards this project in the near future.
 
 ## Getting Started <a name = "getting_started"></a>
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
@@ -97,3 +92,8 @@ simply run `nosetests` in the project directory
 - [Flask](https://palletsprojects.com/p/flask/) - Server Framework
 - [PostgreSQL](https://www.postgresql.org/) - Database
 - [VueJs](https://vuejs.org/) - Web Framework
+
+## Screenshots
+![Sign-in screen](screenshots/sign_in.jpg)
+
+![Join room screen](screenshots/join_room.jpg)
