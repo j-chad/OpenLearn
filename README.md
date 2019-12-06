@@ -93,7 +93,7 @@ simply run `nosetests` in the project directory
 - [PostgreSQL](https://www.postgresql.org/) - Database
 - [VueJs](https://vuejs.org/) - Web Framework
 
-## Screenshots
+## Screenshots <a name="screenshots"></a>
 ![Sign-in screen](screenshots/sign_in.jpg)
 
 ![Join room screen](screenshots/join_room.jpg)
