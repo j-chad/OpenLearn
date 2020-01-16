@@ -22,13 +22,14 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/screenshots" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/OpenLearn/static" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/OpenLearn/static" />
       <recent name="$PROJECT_DIR$/screenshots" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/screenshots" />
     </key>
   </component>
@@ -55,7 +56,11 @@
       <option name="presentableId" value="Default" />
       <updated>1575590664092</updated>
       <workItem from="1575590666185" duration="5956000" />
-      <workItem from="1575605303729" duration="1931000" />
+      <workItem from="1575605303729" duration="2567000" />
+      <workItem from="1575700700130" duration="641000" />
+      <workItem from="1576267794601" duration="14000" />
+      <workItem from="1579205498588" duration="598000" />
+      <workItem from="1579206940916" duration="345000" />
     </task>
     <servers />
   </component>

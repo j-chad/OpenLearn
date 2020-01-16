@@ -1,3 +1,8 @@
+<p align="center">
+  <a href="" rel="noopener">
+ <img width="271.867px" height="200px" src="OpenLearn/static/logo.svg" alt="Project logo"></a>
+</p>
+
 <h3 align="center">OpenLearn</h3>
 
 <div align="center">
